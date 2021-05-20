@@ -2,24 +2,39 @@
 <html lang="en-us">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Unity WebGL Player | Brain</title>
-  <script src="Build/UnityLoader.js"></script>
-  <script>
-     UnityLoader.instantiate("unityContainer", "Build/Output.json");
-    function Reset() {
-       var canvas = document.getElementById("#canvas");//获取#canvas
-       canvas.height = document.documentElement.clientHeight;//获取body可见区域高度
-       canvas.width = document.documentElement.clientWidth;//获取body可见区域高度
-    }
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | Brain</title>
+    <script src="Build/UnityLoader.js"></script>
+    <script>
+        var gameInstance = UnityLoader.instantiate("unityContainer", "Build/Output.json");
+        function Reset() {
+            var canvas = document.getElementById("#canvas");//获取#canvas
+            canvas.height = document.documentElement.clientHeight;//获取body可见区域高度
+            canvas.width = document.documentElement.clientWidth;//获取body可见区域高度
+        }
+
+        // Callback for the Unity OnClose event
+        window.onbeforeunload = function (e) {
+
+            // These are the messages you're seeing in the gif
+            console.log("Calling OnClose from Browser!");
+            gameInstance.SendMessage("SendDataMagangr", "OnClose");
+
+            // This never shows up correctly for me, but it does prompt
+            // the player to close their window with a dialogue box
+            //
+            var dialogText = "You game has been saved!  Would you like to continue unloading the page?";
+            e.returnValue = dialogText;
+            return dialogText;
+        };
     </script>
 </head>
 
-<body οnlοad="Reset()" οnresize="Reset()"  style="margin: 0; overflow: hidden;">
- 
+<body onload="Reset()" onresize="Reset()" style="margin: 0; overflow: hidden;">
+
     <div id="unityContainer" style="width: 100vw; height: 100vh;"></div>
-  
+
 </body>
 
 </html>
