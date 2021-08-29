@@ -87,9 +87,7 @@
     document.getElementsByTagName('head')[0].appendChild(meta);
     container.className = "unity-mobile";
     if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-      canvas.style.width = window.innerWidth + 'px';
-      canvas.style.height = window.innerHeight + 'px';
-
+      Reset();
       unityShowBanner('建議用直向');
     } 
     loadingBar.style.display = "block";
